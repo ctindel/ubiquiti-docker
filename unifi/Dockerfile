@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y curl cron && \
     gpg --export C0A52C50 | apt-key add - && \
 	curl http://dl.ubnt.com/unifi/${UNIFI_VERSION}/unifi_sysvinit_all.deb -o /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb && \
 	dpkg -i /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb || /bin/true && apt-get -yf --force-yes install && \
-	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /mongo_prune_js.js"; } | crontab - && \
+	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
     dpkg --purge curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
@@ -34,7 +34,9 @@ RUN apt-get update && apt-get install -y curl cron && \
 #  DB Stats to last 14 days.  See crontab addition above
 # https://help.ubnt.com/hc/en-us/articles/204911424-UniFi-How-to-remove-prune-older-data-and-adjust-mongo-database-size
 
-ADD mongo_prune_js.js /
+ADD mongo_prune_js.js /bin
+ADD start.sh /bin
+RUN /bin/chmod +x /bin/start.sh
 
 # No reason to expose the MongoDB port 27117 to the outside for most people
 EXPOSE 8080 8443 8843 8880
@@ -43,4 +45,4 @@ EXPOSE 8080 8443 8843 8880
 ENV SHELL /bin/bash
 
 CMD []
-ENTRYPOINT ["/usr/bin/java", "-Xmx256M", "-jar", "/usr/lib/unifi/lib/ace.jar", "start"]
+ENTRYPOINT ["/bin/start.sh"]

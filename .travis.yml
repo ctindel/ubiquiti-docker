@@ -16,9 +16,9 @@ services:
 
 before_script: 
 script:
-  - bash mock_test.sh
+  - bash ./unifi/mock_test.sh
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=$DOCKER_USER/ubiquiti-docker
-  - make build release
+  - make -C unifi build release
 
 after_success: 
