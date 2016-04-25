@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/brentley/ubiquiti-docker.svg?branch=master)](https://travis-ci.org/brentley/ubiquiti-docker)
+[![Build Status](https://travis-ci.org/ctindel/ubiquiti-docker.svg?branch=master)](https://travis-ci.org/ctindel/ubiquiti-docker)
 
 # ubiquiti-docker
 
