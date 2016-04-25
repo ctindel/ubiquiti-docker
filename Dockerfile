@@ -24,10 +24,10 @@ RUN apt-get update && apt-get install -y curl cron && \
     gpg --export C0A52C50 | apt-key add - && \
 	curl http://dl.ubnt.com/unifi/${UNIFI_VERSION}/unifi_sysvinit_all.deb -o /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb && \
 	dpkg -i /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb || /bin/true && apt-get -yf --force-yes install && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
     dpkg --purge curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 	rm -rf /var/lib/unifi/* /usr/lib/unifi/{data.,logs.,run.}* 
 
 # We'll run the mongo prune script every day at 2am to minimize
