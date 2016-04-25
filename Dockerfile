@@ -16,7 +16,8 @@ ARG UNIFI_VERSION
 #  /var/lib/unifi and /usr/lib/unifi symlinks for us.  But we don't
 #  want to keep any of that data around, we want our union mount to
 #  replace /var/lib/unifi so we remove a bunch of dirs at the end
-RUN apt-get update && apt-get install -y curl procps net-tools vim cron && \
+#RUN apt-get update && apt-get install -y curl cron procps net-tools vim && \
+RUN apt-get update && apt-get install -y curl cron && \
     echo "deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti" > /etc/apt/sources.list.d/100-ubnt.list && \
     apt-get -y install debian-keyring debian-archive-keyring && \
     gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
@@ -26,6 +27,7 @@ RUN apt-get update && apt-get install -y curl procps net-tools vim cron && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
+    dpkg purge curl && \
 	rm -rf /var/lib/unifi/* /usr/lib/unifi/{data.,logs.,run.}* 
 
 # We'll run the mongo prune script every day at 2am to minimize
