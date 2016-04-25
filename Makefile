@@ -6,7 +6,7 @@ VERSION = 4.8.15
 all: build
 
 build:
-	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) -t $(NAME):$(VERSION) --rm image
+	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) -t $(NAME):$(VERSION) --rm .
 
 test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
