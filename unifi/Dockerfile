@@ -16,8 +16,7 @@ ARG UNIFI_VERSION
 #  /var/lib/unifi and /usr/lib/unifi symlinks for us.  But we don't
 #  want to keep any of that data around, we want our union mount to
 #  replace /var/lib/unifi so we remove a bunch of dirs at the end
-#RUN apt-get update && apt-get install -y curl cron procps net-tools vim && \
-RUN apt-get update && apt-get install -y curl cron && \
+RUN apt-get update && apt-get install -y curl cron procps net-tools vim && \
     echo "deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti" > /etc/apt/sources.list.d/100-ubnt.list && \
     apt-get -y install debian-keyring debian-archive-keyring && \
     gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
