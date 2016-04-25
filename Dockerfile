@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y curl cron && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
-    dpkg purge curl && \
+    dpkg --purge curl && \
 	rm -rf /var/lib/unifi/* /usr/lib/unifi/{data.,logs.,run.}* 
 
 # We'll run the mongo prune script every day at 2am to minimize
