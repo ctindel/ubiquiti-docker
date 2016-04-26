@@ -4,11 +4,6 @@ MAINTAINER Chad Tindel "chad@tindel.net"
 # Must be passed in at build time with --build-arg
 ARG UNIFI_VERSION
 
-# apt-get update && apt-get -y install unifi && \
-# OR
-# RUN curl http://dl.ubnt.com/unifi/${UNIFI_VERSION}/unifi_sysvinit_all.deb -o /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb
-# RUN dpkg -i /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb || /bin/true && apt-get -yf --force-yes install
-
 # We download the exact version of Unifi that we want so that we know our 
 #  docker tags are correct instead of apt-get update && apt-get -y install unifi
 #
@@ -21,7 +16,7 @@ RUN apt-get update && apt-get install -y curl cron procps net-tools vim && \
     apt-get -y install debian-keyring debian-archive-keyring && \
     gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
     gpg --export C0A52C50 | apt-key add - && \
-	curl http://dl.ubnt.com/unifi/${UNIFI_VERSION}/unifi_sysvinit_all.deb -o /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb && \
+	curl -L https://www.ubnt.com/downloads/unifi/4.9.4-68c91e4a/unifi_sysvinit_all.deb -o /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb && \
 	dpkg -i /tmp/unifi_sysvinit_all-${UNIFI_VERSION}.deb || /bin/true && apt-get -yf --force-yes install && \
 	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
