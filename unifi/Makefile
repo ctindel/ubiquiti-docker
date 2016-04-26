@@ -1,5 +1,5 @@
 NAME = ctindel/unifi-controller
-VERSION = 4.8.15
+VERSION = 4.9.1-alpha-691f5a97
 
 .PHONY: all build test tag_latest release
 
