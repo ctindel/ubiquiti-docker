@@ -4,14 +4,15 @@
 #  official mongodb 3.2 files are called mongodb-org-server
 #  so we need to modify the deb dependencies 
 
-if [[ -z "$1" ]]; then
-  echo "Syntax: $0 debfile"
+if [[ -z "$1" || -z "$2" ]]; then
+  echo "Syntax: $0 debfile outdir"
   exit 1
 fi
 
 DEBFILE="$1"
+OUTDIR="$2"
 TMPDIR=`mktemp -d /tmp/deb.XXXXXXXXXX` || exit 1
-OUTPUT=`basename "$DEBFILE" .deb`.modified.deb
+OUTPUT=$OUTDIR/`basename "$DEBFILE" .deb`.modified.deb
 
 if [[ -e "$OUTPUT" ]]; then
   echo "$OUTPUT exists."

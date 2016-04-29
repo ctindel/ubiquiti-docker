@@ -30,7 +30,7 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     apt-get update && apt-get install -y curl cron procps net-tools vim mongodb-org && \
 	curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
-    /bin/munge_mongodb_deps.sh /tmp/unifi.deb && \
+    /bin/munge_mongodb_deps.sh /tmp/unifi.deb /tmp && \
 	dpkg -i /tmp/unifi.modified.deb || /bin/true && apt-get -yf --force-yes install && \
 	crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
