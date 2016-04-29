@@ -1,12 +1,13 @@
 NAME = ctindel/unifi-controller
-VERSION = 4.9.4-alpha-68c91e4a
+VERSION = 4.8.15
+UNIFI_DEB_URL=http://dl.ubnt.com/unifi/$(VERSION)/unifi_sysvinit_all.deb
 
 .PHONY: all build test tag_latest release
 
 all: build
 
 build:
-	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) -t $(NAME):$(VERSION) --rm .
+	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm .
 
 test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
