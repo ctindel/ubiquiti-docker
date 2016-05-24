@@ -13,17 +13,14 @@ ARG UNIFI_VIDEO_DEB_URL
 #  current storage engine is wiredTiger" but it seems to be harmless.  
 #  Still, would be nice to be able to override the mongod options.
 #
-# We need to run the unifi-video script once because it sets up all the 
-#  /var/lib/unifi and /usr/lib/unifi symlinks for us.  But we don't
-#  want to keep any of that data around, we want our union mount to
-#  replace /var/lib/unifi so we remove a bunch of dirs at the end.
 RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selections && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
     echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     apt-get update && apt-get install -y mongodb-org && \
     curl -L ${UNIFI_VIDEO_DEB_URL} -o /tmp/unifi-video.deb && \
-    dpkg -i  /tmp/unifi-video.deb || /bin/true && apt-get -yf --force-yes install && \
-    mkdir -p /var/cache/unifi-video
+    mkdir -p /var/cache/unifi-video && \
+    mkdir -p /var/run/unifi-video && \
+	dpkg -i /tmp/unifi-video.deb || /bin/true && apt-get -yf --force-yes install
 
 ADD start.sh /bin
 RUN /bin/chmod +x /bin/start.sh
