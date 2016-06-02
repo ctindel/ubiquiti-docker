@@ -1,4 +1,16 @@
 #!/bin/bash
 
 /etc/init.d/cron start
-/usr/bin/java -Xmx256M -jar /usr/lib/unifi/lib/ace.jar start
+/usr/bin/jsvc \
+ -nodetach \
+ -debug \
+ -home /usr/lib/jvm/java-6-openjdk-amd64 \
+ -cp /usr/share/java/commons-daemon.jar:/usr/lib/unifi/lib/ace.jar \
+ -pidfile /var/run/unifi/unifi.pid \
+ -procname unifi \
+ -Dunifi.datadir=/var/lib/unifi \
+ -Dunifi.logdir=/var/log/unifi \
+ -Dunifi.rundir=/var/run/unifi \
+ -Xmx1024M \
+ -Dfile.encoding=UTF-8 \
+ com.ubnt.ace.Launcher start
