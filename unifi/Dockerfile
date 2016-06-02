@@ -10,9 +10,8 @@ ARG UNIFI_DEB_URL
 # https://help.ubnt.com/hc/en-us/articles/204911424-UniFi-How-to-remove-prune-older-data-and-adjust-mongo-database-size
 
 ADD mongo_prune_js.js /bin
-ADD munge_mongodb_deps.sh /bin
 ADD start.sh /bin
-RUN /bin/chmod +x /bin/start.sh /bin/munge_mongodb_deps.sh
+RUN /bin/chmod +x /bin/start.sh
 
 # We download the exact version of Unifi that we want so that we know our 
 #  docker tags are correct instead of apt-get update && apt-get -y install unifi
@@ -30,8 +29,7 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     apt-get update && apt-get install -y curl cron procps net-tools vim mongodb-org && \
     curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
-    /bin/munge_mongodb_deps.sh /tmp/unifi.deb /tmp && \
-    dpkg -i /tmp/unifi.modified.deb || /bin/true && apt-get -yf --force-yes install && \
+    dpkg -i /tmp/unifi.deb || /bin/true && apt-get -yf --force-yes install && \
     crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \ 
     dpkg --purge curl && \
