@@ -1,6 +1,9 @@
 #!/bin/bash
 
 /etc/init.d/cron start
+
+rm -f /var/run/unifi/unifi.pid
+
 /usr/bin/jsvc \
  -nodetach \
  -debug \
