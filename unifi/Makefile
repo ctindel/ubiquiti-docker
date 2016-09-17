@@ -1,16 +1,17 @@
 NAME = dsully/unifi-controller
-VERSION = 5.2.6-985a3fc5
-UNIFI_DEB_URL=https://www.ubnt.com/downloads/unifi/$(VERSION)/unifi_sysvinit_all.deb
+VERSION = 5.2.6
+HASH = 985a3fc5
+UNIFI_DEB_URL=https://www.ubnt.com/downloads/unifi/$(VERSION)-$(HASH)/unifi_sysvinit_all.deb
 
 .PHONY: all build test tag_latest release
 
 all: build
 
 build:
-	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm .
+	docker build --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm .
 
 test:
-	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
+	env NAME=$(NAME) VERSION=$(VERSION) ./mock_test.sh
 
 tag_latest:
 	docker tag -f $(NAME):$(VERSION) $(NAME):latest
