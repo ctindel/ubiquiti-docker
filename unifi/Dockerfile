@@ -1,6 +1,10 @@
 FROM debian:jessie
 MAINTAINER Dan Sully "daniel-github@electricrain.com"
 
+ENV DEBIAN_FRONTEND noninteractive
+
+VOLUME ["/var/lib/unifi"]
+
 # Must be passed in at build time with --build-arg
 ARG UNIFI_DEB_URL
 
@@ -19,36 +23,28 @@ RUN /bin/chmod +x /bin/start.sh
 #  /var/lib/unifi and /usr/lib/unifi symlinks for us.  But we don't
 #  want to keep any of that data around, we want our union mount to
 #  replace /var/lib/unifi so we remove a bunch of dirs at the end
-RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selections && \
-    apt-get update -q && \
-    apt-get -y install apt-utils debian-keyring debian-archive-keyring && \
-    gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
-    gpg --export C0A52C50 | apt-key add - && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
-    echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list && \
+RUN echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list && \
     echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
-    apt-get update -q && \
-    apt-get install -y \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
+    apt-get -q update && \
+    apt-get -qy install \
         binutils \
-        ca-certificates-java \
         cron \
         curl \
-        libcommons-daemon-java \
         jsvc \
         mongodb-org \
-        net-tools \
-        openjdk-8-jre-headless \
-        procps && \
+        openjdk-8-jre-headless && \
     curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
     dpkg -i /tmp/unifi.deb || /bin/true && apt-get -yf --force-yes install && \
     crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \
     dpkg --purge curl && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get -q clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/lib/unifi/* /usr/lib/unifi/{data.,logs.,run.}*
 
 # No reason to expose the MongoDB port 27117 to the outside for most people
-EXPOSE 8080 8443 8843 8880
+EXPOSE 8080/tcp 8443/tcp 8843/tcp 8880/tcp
 #EXPOSE 27117
 
 ENV SHELL /bin/bash

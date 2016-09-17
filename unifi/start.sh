@@ -6,8 +6,7 @@ rm -f /var/run/unifi/unifi.pid
 
 /usr/bin/jsvc \
  -nodetach \
- -debug \
- -home /usr/lib/jvm/java-6-openjdk-amd64 \
+ -home /usr/lib/jvm/java-8-openjdk-amd64 \
  -cp /usr/share/java/commons-daemon.jar:/usr/lib/unifi/lib/ace.jar \
  -pidfile /var/run/unifi/unifi.pid \
  -procname unifi \
