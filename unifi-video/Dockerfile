@@ -25,7 +25,7 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     sed -i.bak 's/ulimit -H -c 200//g' /usr/sbin/unifi-video && \
     sed -i.bak 's/PKGUSER=unifi-video/PKGUSER=root/g' /usr/sbin/unifi-video && \
     chmod 755 /usr/sbin/unifi-video && \
-    chown -R root.root /var/lib/unifi-video /usr/lib/unifi-video
+    chown -R root.root /var/lib/unifi-video /usr/lib/unifi-video /var/log/unifi-video
 
 ADD start.sh /bin
 RUN /bin/chmod +x /bin/start.sh
