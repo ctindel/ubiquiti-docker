@@ -23,6 +23,7 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     dpkg -i /tmp/unifi-video.deb || /bin/true && apt-get -yf --force-yes install && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     sed -i.bak 's/ulimit -H -c 200//g' /usr/sbin/unifi-video && \
+    sed -i.bak 's/PKGUSER=unifi-video/PKGUSER=root/g' /usr/sbin/unifi-video && \
 	chmod 755 /usr/sbin/unifi-video
 
 ADD start.sh /bin
