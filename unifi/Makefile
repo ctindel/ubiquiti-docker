@@ -1,5 +1,5 @@
 NAME = ctindel/unifi-controller
-VERSION = 5.0.7
+VERSION = 5.2.9
 UNIFI_DEB_URL=http://dl.ubnt.com/unifi/$(VERSION)/unifi_sysvinit_all.deb
 
 .PHONY: all build test tag_latest release
@@ -13,7 +13,7 @@ test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
 
 tag_latest:
-	docker tag --force=true $(NAME):$(VERSION) $(NAME):latest
+	docker tag $(NAME):$(VERSION) $(NAME):latest
 
 release: tag_latest
 	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
