@@ -1,4 +1,4 @@
-FROM debian:7.10
+FROM phusion/baseimage:0.9.19
 MAINTAINER Chad Tindel "chad@tindel.net"
 
 # Must be passed in at build time with --build-arg
@@ -21,13 +21,12 @@ RUN /bin/chmod +x /bin/start.sh
 #  want to keep any of that data around, we want our union mount to
 #  replace /var/lib/unifi so we remove a bunch of dirs at the end
 RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selections && \
-    apt-get update && apt-get -y install debian-keyring debian-archive-keyring && \
-    gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
-    gpg --export C0A52C50 | apt-key add - && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv C0A52C50 && \
+    echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     echo "deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti" > /etc/apt/sources.list.d/100-ubnt.list && \
-    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
-    apt-get update && apt-get install -y curl cron procps net-tools vim mongodb-org && \
+    apt-get update && apt-get install -y mongodb-org && \
+    apt-get install -y curl cron procps net-tools vim mongodb-org && \
     curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
     dpkg -i /tmp/unifi.deb || /bin/true && apt-get -yf --force-yes install && \
     crontab -l | { cat; echo "0 2 * * * mongo --port 27117 < /bin/mongo_prune_js.js"; } | crontab - && \
