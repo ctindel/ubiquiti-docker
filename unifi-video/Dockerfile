@@ -21,7 +21,9 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     mkdir -p /var/cache/unifi-video && \
     mkdir -p /var/run/unifi-video && \
     dpkg -i /tmp/unifi-video.deb || /bin/true && apt-get -yf --force-yes install && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    sed -i.bak 's/ulimit -H -c 200//g' /usr/sbin/unifi-video && \
+	chmod 755 /usr/sbin/unifi-video
 
 ADD start.sh /bin
 RUN /bin/chmod +x /bin/start.sh
