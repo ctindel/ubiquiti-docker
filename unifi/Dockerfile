@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM phusion/baseimage:0.9.19
 MAINTAINER Dan Sully "daniel-github@electricrain.com"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -23,8 +23,8 @@ RUN /bin/chmod +x /bin/start.sh
 #  /var/lib/unifi and /usr/lib/unifi symlinks for us.  But we don't
 #  want to keep any of that data around, we want our union mount to
 #  replace /var/lib/unifi so we remove a bunch of dirs at the end
-RUN echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list && \
-    echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
     apt-get -q update && \
