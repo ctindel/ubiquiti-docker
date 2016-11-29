@@ -2,7 +2,12 @@ This Docker image contains the Ubiquiti Unifi Controller, using an external Mong
 
 Quick Start:
 
-  docker run -d --name mongo mongo:3
+```
+   docker run -d --name mongo \
+     --volume /var/lib/mongo/db:/data/db \
+     --volume /var/lib/mongo/configdb:/data/configdb \
+     mongo:3
+
   docker run -d --name unifi-controller \
      -p 8080:8080 \
      -p 8443:8443 \
@@ -11,3 +16,4 @@ Quick Start:
      --link mongo:mongo \
      --volume /tmp/unifi:/var/lib/unifi \
      dsully/unifi-controller:latest
+```
