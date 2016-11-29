@@ -11,7 +11,7 @@ var now = new Date().getTime(),
 
 print((dryrun ? "[dryrun] " : "") + "pruning data older than " + days + " days (" + time_criteria + ")... ");
 
-use ace;
+use unifi;
 var collectionNames = db.getCollectionNames();
 for (i=0; i<collectionNames.length; i++) {
 	var name = collectionNames[i];
@@ -61,7 +61,7 @@ for (i=0; i<collectionNames.length; i++) {
 	}
 }
 
-use ace_stat;
+use unifi_stat;
 var collectionNames = db.getCollectionNames();
 for (i=0; i<collectionNames.length; i++) {
 	var name = collectionNames[i];
