@@ -1,19 +1,16 @@
 This Docker image contains the Ubiquiti Unifi Controller, using an external MongoDB container.
 
+Originally meant for running on a Synology, it can be run anywhere.
+
+Requirements:
+
+* docker
+* docker-compose 1.6+
+
 Quick Start:
 
 ```
-   docker run -d --name mongo \
-     --volume /var/lib/mongo/db:/data/db \
-     --volume /var/lib/mongo/configdb:/data/configdb \
-     mongo:3
-
-  docker run -d --name unifi-controller \
-     -p 8080:8080 \
-     -p 8443:8443 \
-     -p 8843:8843 \
-     -p 8880:8880 \
-     --link mongo:mongo \
-     --volume /tmp/unifi:/var/lib/unifi \
-     dsully/unifi-controller:latest
+  $ mkdir -p /volume1/docker/
+  $ curl -sO https://raw.githubusercontent.com/dsully/ubiquiti-docker/master/unifi/docker-compose.yml
+  $ docker-compose up -d
 ```

@@ -1,0 +1,24 @@
+# Bring up the Unifi Controller and Mongo DB instance in separate Docker containers.
+version: '2'
+services:
+
+  mongo:
+    image: mongo:3
+    volumes:
+      - /volume1/docker/mongo:/data
+
+  unifi-controller:
+    image: dsully/unifi-controller:latest
+    volumes:
+      - /volume1/docker/unifi:/var/lib/unifi
+    links:
+      - mongo:mongo
+    ports:
+      - "3478/udp:3478/udp"
+      - "5656-5699/udp:5656-5699/udp"
+      - "8080/tcp:8080/tcp"
+      - "8443/tcp:8443/tcp"
+      - "8880/tcp:8880/tcp"
+      - "8881/tcp:8881/tcp"
+      - "8882/tcp:8882/tcp"
+      - "8843/tcp:8843/tcp"
