@@ -37,7 +37,8 @@ RUN set -x \
 ADD mongo_prune_js.js /bin
 ADD start.sh /bin
 
-EXPOSE 8080/tcp 8443/tcp 8843/tcp 8880/tcp
+# https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
+EXPOSE 3478/udp 5656-5699/udp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp
 
 ENV SHELL /bin/bash
 CMD []
