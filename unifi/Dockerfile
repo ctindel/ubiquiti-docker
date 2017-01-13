@@ -22,12 +22,12 @@ RUN set -x \
         init-system-helpers \
         jsvc \
         libcommons-daemon-java \
-        mongodb-org-shell && \
+        mongodb-org-shell \
+        telnet &&
     curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
     dpkg --force-all -i /tmp/unifi.deb || /bin/true && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \
     echo "0 2 * * * mongo --host mongo < /bin/mongo_prune_js.js" | crontab && \
-    dpkg -P curl && \
     apt-get -qy clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/log/unifi/* /var/lib/unifi/* /usr/lib/unifi/{data.,logs.,run.}*
@@ -38,7 +38,7 @@ ADD mongo_prune_js.js /bin
 ADD start.sh /bin
 
 # https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
-EXPOSE 3478/udp 5656-5699/udp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp
+EXPOSE 3478/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp
 
 ENV SHELL /bin/bash
 CMD []
