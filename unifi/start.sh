@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 /etc/init.d/cron start
 
@@ -22,5 +22,8 @@ exec /usr/bin/jsvc \
  -Dunifi.logdir=/var/log/unifi \
  -Dunifi.rundir=/var/run/unifi \
  -Xmx1024M \
+ -Djava.awt.headless=true \
  -Dfile.encoding=UTF-8 \
+ -outfile SYSLOG \
+ -errfile SYSLOG \
  com.ubnt.ace.Launcher start
