@@ -23,7 +23,7 @@ RUN set -x \
         jsvc \
         libcommons-daemon-java \
         mongodb-org-shell \
-        telnet &&
+        telnet && \
     curl -L ${UNIFI_DEB_URL} -o /tmp/unifi.deb && \
     dpkg --force-all -i /tmp/unifi.deb || /bin/true && \
     /etc/init.d/unifi start && /etc/init.d/unifi stop && \
