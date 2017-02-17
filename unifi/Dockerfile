@@ -10,12 +10,11 @@ ARG UNIFI_DEB_URL
 
 # Run the unifi script once to setup symlinks.
 # But don't keep any of that data around, as the union mount will replace /var/lib/unifi at runtime.
-RUN set -x \
-    echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+RUN set -x && \
     echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.2.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C0A52C50 && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
-    apt-get -q update && \
+    apt-get update && \
     apt-get -qy install --no-install-recommends \
         cron \
         curl \
@@ -38,7 +37,8 @@ ADD mongo_prune_js.js /bin
 ADD start.sh /bin
 
 # https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
-EXPOSE 3478/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp
+# Plus 10001/UDP is the Inform/Discovery port.
+EXPOSE 3478/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp 10001/udp
 
 ENV SHELL /bin/bash
 CMD []
