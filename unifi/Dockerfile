@@ -37,8 +37,7 @@ ADD mongo_prune_js.js /bin
 ADD start.sh /bin
 
 # https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
-# Plus 10001/UDP is the Inform/Discovery port.
-EXPOSE 3478/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp 10001/udp
+EXPOSE 3478/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 8881/tcp 8882/tcp
 
 ENV SHELL /bin/bash
 CMD []
