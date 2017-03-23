@@ -1,6 +1,6 @@
 NAME = dsully/unifi-controller
-VERSION = 5.5.8
-HASH=-f7e54e94a4
+VERSION = 5.6.1
+HASH=-0fab4f5321
 UNIFI_DEB_URL=https://www.ubnt.com/downloads/unifi/$(VERSION)$(HASH)/unifi_sysvinit_all.deb
 
 .PHONY: all build test tag_latest release
@@ -19,4 +19,4 @@ tag_latest:
 release: tag_latest
 	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
 	docker push $(NAME)
-	@echo "*** Don't forget to create a tag. git tag rel-$(VERSION) && git push origin rel-$(VERSION)"
+	@echo "*** Don't forget to create a tag. git tag rel-$(VERSION); git push origin rel-$(VERSION)"
