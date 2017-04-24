@@ -1,6 +1,6 @@
 NAME = dsully/unifi-controller
-VERSION = 5.6.2
-HASH=-224554000b
+VERSION = 5.6.3
+HASH=-bed25ecf6c
 UNIFI_DEB_URL=https://www.ubnt.com/downloads/unifi/$(VERSION)$(HASH)/unifi_sysvinit_all.deb
 
 .PHONY: all build test tag_latest release
