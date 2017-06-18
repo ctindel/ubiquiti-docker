@@ -5,7 +5,7 @@ services:
   mongo:
     image: mongo:3
     volumes:
-      - /volume1/docker/mongo:/data
+      - /volume1/docker/mongo:/data/db
 
   unifi-controller:
     image: dsully/unifi-controller:latest
