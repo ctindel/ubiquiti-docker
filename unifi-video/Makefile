@@ -1,6 +1,6 @@
 NAME = ctindel/unifi-video-controller
 VERSION = 3.8.0
-UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/unifi-video/$(VERSION)/unifi-video_$(VERSION)-Ubuntu14.04_amd64.deb
+UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/ufv/v$(VERSION)/unifi-video.Ubuntu14.04_amd64.v$(VERSION).deb
 
 .PHONY: all build test tag_latest release
 
