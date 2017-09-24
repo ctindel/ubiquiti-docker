@@ -10,7 +10,7 @@ build:
 	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm=true .
 
 test:
-	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
+	env NAME=$(NAME) VERSION=$(VERSION) ./mock_test.sh
 
 tag_latest:
 	docker tag $(NAME):$(VERSION) $(NAME):latest
