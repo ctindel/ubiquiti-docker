@@ -7,7 +7,7 @@ UNIFI_DEB_URL=http://dl.ubnt.com/unifi/$(VERSION)/unifi_sysvinit_all.deb
 all: build
 
 build:
-	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm .
+	docker build --no-cache --build-arg UNIFI_VERSION=$(VERSION) --build-arg UNIFI_DEB_URL=$(UNIFI_DEB_URL) -t $(NAME):$(VERSION) --rm=true .
 
 test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh

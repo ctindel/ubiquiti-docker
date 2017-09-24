@@ -7,7 +7,7 @@ UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/unifi-video/$(VERSION)/unifi-vi
 all: build
 
 build:
-	docker build --no-cache --build-arg UNIFI_VIDEO_VERSION=$(VERSION) --build-arg UNIFI_VIDEO_DEB_URL=$(UNIFI_VIDEO_DEB_URL) -t $(NAME):$(VERSION) --rm .
+	docker build --no-cache --build-arg UNIFI_VIDEO_VERSION=$(VERSION) --build-arg UNIFI_VIDEO_DEB_URL=$(UNIFI_VIDEO_DEB_URL) -t $(NAME):$(VERSION) --rm=true .
 
 test:
 	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
