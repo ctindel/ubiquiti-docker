@@ -1,6 +1,6 @@
-NAME = ctindel/unifi-video-controller
-VERSION = 3.8.0
-UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/ufv/v$(VERSION)/unifi-video.Ubuntu14.04_amd64.v$(VERSION).deb
+NAME=ctindel/unifi-video-controller
+VERSION=3.8.1
+UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/ufv/v$(VERSION)/unifi-video.Ubuntu16.04_amd64.v$(VERSION).deb
 
 .PHONY: all build test tag_latest release
 
@@ -10,7 +10,7 @@ build:
 	docker build --no-cache --build-arg UNIFI_VIDEO_VERSION=$(VERSION) --build-arg UNIFI_VIDEO_DEB_URL=$(UNIFI_VIDEO_DEB_URL) -t $(NAME):$(VERSION) --rm=true .
 
 test:
-	env NAME=$(NAME) VERSION=$(VERSION) ./mocktest.sh
+	env NAME=$(NAME) VERSION=$(VERSION) ./mock_test.sh
 
 tag_latest:
 	docker tag $(NAME):$(VERSION) $(NAME):latest
