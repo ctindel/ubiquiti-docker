@@ -32,4 +32,7 @@ fi
 # We don't want the process to daemonize because we want it to run forever
 #  as the docker container process
 echo "UFV_DAEMONIZE=false" > /etc/default/unifi-video
+
+echo "About to run 'chown -R unifi-video:unifi-video /var/lib/unifi-video' this could take a while..."
+chown -R unifi-video:unifi-video /var/lib/unifi-video
 /usr/sbin/unifi-video start
