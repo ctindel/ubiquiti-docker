@@ -29,10 +29,13 @@ if [ ! -f /var/lib/unifi-video/system.properties ]; then
     echo "is_default=true" > /var/lib/unifi-video/system.properties
 fi
 
-# We don't want the process to daemonize because we want it to run forever
-#  as the docker container process
-echo "UFV_DAEMONIZE=false" > /etc/default/unifi-video
-
 echo "About to run 'chown -R unifi-video:unifi-video /var/lib/unifi-video' this could take a while..."
 chown -R unifi-video:unifi-video /var/lib/unifi-video
-/usr/sbin/unifi-video start
+#sed -i.bak 's/PKGUSER=.*/PKGUSER=root/g' /usr/sbin/unifi-video
+
+#while true
+#do
+#    echo "Press [CTRL+C] to stop.."
+#    sleep 1
+#done
+/usr/sbin/unifi-video --nodetach --debug --verbose start
