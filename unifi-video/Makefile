@@ -1,5 +1,5 @@
 NAME=ctindel/unifi-video-controller
-VERSION=3.8.3
+VERSION=3.8.4
 UNIFI_VIDEO_DEB_URL=http://dl.ubnt.com/firmwares/ufv/v$(VERSION)/unifi-video.Ubuntu16.04_amd64.v$(VERSION).deb
 
 .PHONY: all build test tag_latest release
