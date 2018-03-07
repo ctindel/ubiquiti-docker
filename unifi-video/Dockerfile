@@ -20,6 +20,7 @@ RUN echo "debconf debconf/frontend select Noninteractive" | debconf-set-selectio
     curl -L ${UNIFI_VIDEO_DEB_URL} -o /tmp/unifi-video.deb && \
     mkdir -p /var/cache/unifi-video && \
     mkdir -p /var/run/unifi-video && \
+    mkdir -p /var/lib/unifi-video/logs && \
     dpkg -i /tmp/unifi-video.deb || /bin/true && apt-get -yf --force-yes install && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     sed -i.bak 's/ulimit -H -c 200//g' /usr/sbin/unifi-video && \
