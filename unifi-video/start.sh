@@ -41,7 +41,8 @@ else
     echo "Ownership permissions already set, no need to chown again"
 fi
 
-mkdir -p /var/lib/unifi-video/logs
+mkdir -p /var/lib/unifi-video/log
+chown -R unifi-video:unifi-video /var/lib/unifi-video/log
 
 #sed -i.bak 's/PKGUSER=.*/PKGUSER=root/g' /usr/sbin/unifi-video
 
